@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 function ListDetail() {
 
     const listMovies=useSelector((state)=>state.list.listMovies)
+
     console.log(listMovies)
   return (
     <div>
@@ -17,7 +18,7 @@ function ListDetail() {
         <button className='section2'><Link to={'/ListDetail'}> </Link></button>
         </div>
       </nav>
-      <Table striped bordered hover variant='dark' size='sm'>
+      
 
      
         <thead>
@@ -43,7 +44,7 @@ listMovies.map((item)=>(
     }
         </tbody>
    
-      </Table>
+
  
     </div>
   )

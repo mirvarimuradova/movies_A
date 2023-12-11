@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Details from './Details'
 import { listActions } from './Redux/Slice/listSlice';
+import ListDetailModal from "./ListDeatilModal"
+import Foto from "../Components/images/exitIcon.png"
 
 const Movies = () => {
 
@@ -30,14 +32,12 @@ const Movies = () => {
       setFilm(document.querySelector('.inputt').value)
       console.log(text)
     }
-    function searchDetails(){
-      <Link to={`/details/`}></Link>
-    }
+    
     const dispatch=useDispatch();
-    function addListMovie(title){
-      console.log(title)
-     const movie =text.find((movie)=>movie.Title==title)
-  
+    function addListMovie(id){
+     
+     const movie =text.find((movie)=>movie.imdbID==id)
+
       
 dispatch(
   listActions.addMovies ({
@@ -48,17 +48,41 @@ dispatch(
   imdbID:movie.imdbID
 })
 )
-console.log(listItems)
+
     }
+    var counter=0;
+  function ModalActive() {
+    const modal=document.querySelector(".listMoviesModal")
+    console.log(modal.classList)
+   
+    if (counter==0) {
+      modal.classList.add('display')
+      counter++;
+    }else  if (counter>0) {
+      
+      modal.classList.remove("display")
   
+      counter=0
+      
+    }
+    
+  
+  }
     return (
     <div>
       <nav>
         <h1>MOvies</h1>
         <div className='div1'>
         <button className='section1' > <Link to={'/'}>Home</Link> </button>
-        <button className='section2'><Link to={'/details'}> </Link></button>
-        <button className='section2'><Link to={'/ListDetail'}> ListDetail</Link></button>
+        
+        <button className='section3' onClick={ModalActive}> List</button>
+       
+       <section className='listMoviesModal'>
+       <img className='exit' onClick={ModalActive} src={Foto} alt="" width={20} height={20} />
+       <ListDetailModal/>
+      
+       <button className='saxla' >yadda saxla</button>
+        </section> 
         </div>
       </nav>
       <div className='div1'>
@@ -69,14 +93,14 @@ console.log(listItems)
      <main>
        
      { 
-     
+      
       text.map(e => (
-       
+       e.Title !=null &&
         <div className='card'>
          <img src={e.Poster}/> 
         <p> {e.Title}</p><span>({e.Year})</span>
-        <button className='button' onClick={()=>addListMovie(e.Title)}  >Add list</button>
-        <div className='list'>{e.Title}</div>
+        <button className='button' onClick={()=>addListMovie(e.imdbID)}  >Add list</button>
+        {/* <div className='list'>{e.Title}</div> */}
          <button className='button'><Link  to={`/details/${e.imdbID}`}>details</Link></button>
         </div>
       ))
@@ -87,6 +111,7 @@ console.log(listItems)
       
      
       <Details/>
+      
       
     </div>
   )

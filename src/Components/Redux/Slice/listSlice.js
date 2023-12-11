@@ -10,12 +10,13 @@ const listSlice= createSlice({
     initialState,
 reducers:{
     addMovies:(state,action)=>{
-        debugger;
+     
 const newMovie=action.payload;
-if (!state.listMovies.length==0) {
+
+if (state.listMovies.length!=0) {
     
     const existingItem = state.listMovies.find(
-        (item) => item.Title==newMovie.Title);
+        (item) => item.imdbID==newMovie.imdbID);
         if (!existingItem){
     state.listMovies.push(
         {
@@ -40,19 +41,19 @@ if (!state.listMovies.length==0) {
         }
     )
    console.log(state.listMovies)
-}
+}}
    
 },
 deletMovies:(state,action)=>{
     const deletedMovie= action.payload;
-    const existingItem = state.cartItems.find(
-        (item) => item.Title == deletedMovie.Title);
+    const existingItem = state.listMovies.find(
+        (item) => item.imdbID == deletedMovie.imdbID);
         if (existingItem) {
-            state.listMovies=state.listMovies.filter(item=>item.Title!=deletedMovie.Title)
+            state.listMovies=state.listMovies.filter(item=>item.imdbID!=deletedMovie.imdbID)
         }
         
 }
-}});
+});
 export const listActions=listSlice.actions;
 export default listSlice.reducer;
     
